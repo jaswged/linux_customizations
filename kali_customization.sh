@@ -10,14 +10,14 @@ declare grn='\033[0;32m' # Green
 declare red='\033[0;31m' # Red
 
 
-# Desktop environment check
+# Desktop environment check. Install GNOME baby!
 if [ $XDG_CURRENT_DESKTOP != "GNOME" ]; then
     echo -e "${red}! *****  ${yel}Please install the Gnome desktop environment.  ${red}*****${nc}\n"
     
     while : ; do
         read -n 1 -p "Do you want to install Gnome now? [y/n] " ans
         case $ans in
-            [Yy]* ) echo -e "\n"; sudo apt update; sudo apt install gnome -y; break;;
+            [Yy]* ) sudo apt update; sudo apt install gnome -y; break;;
             [Nn]* ) echo -e "\n\n${yel}# ${cyan}Exiting script...${nc}"; exit;;
             * ) echo -e "\n${yel}# ${cyan}Please choose ${yel}Yes ${cyan}or ${yel}No${cyan}.${nc}\n"
         esac
@@ -25,7 +25,7 @@ if [ $XDG_CURRENT_DESKTOP != "GNOME" ]; then
 fi
 
 
-# Password reminder
+# Password change reminder
 echo -e "\n\n${yel}# ${cyan}*****  ${yel}Please remember to change your password.  ${cyan}*****${nc}"
 read -n 1 -r -p "Press any key to continue..."
 echo -e "\n\n"
@@ -39,13 +39,18 @@ if [ ! -d $HOME/git ]; then
 else
     echo -e "${yel}# ${grn}$HOME/git already exists.${nc}"
 fi
+
 if [ ! -d /git ]; then
     sudo ln -s $HOME/git /git
 else
     echo -e "${yel}# ${grn}Symlink /git to $HOME/git already exists.${nc}"
 fi
+
 declare githome=$HOME/git
+
+# Is this really needed? TODO
 git clone https://github.com/takieyda/linux_customizations $githome/linux_customizations
+
 echo -e "${cyan}User:\t ${yel}`whoami`"
 echo -e "${cyan}HOME:\t ${yel}$HOME"
 echo -e "${cyan}GITHOME: ${yel}$githome${nc}"
@@ -76,10 +81,10 @@ echo -e "${yel}# ${grn}Performing Apt Update.${nc}"
 sudo apt update > /dev/null
 echo -e "${yel}# ${grn}Performing Apt Install.${nc}"
 sudo apt install \
-    alien \
+    #alien \
     bloodhound \
     cowsay \
-    dconf-editor \
+    #conf-editor \
     gnome-shell-extension-arc-menu \
     gnome-shell-extension-dash-to-panel \
     gnome-shell-extension-desktop-icons \
@@ -88,18 +93,20 @@ sudo apt install \
     gnome-shell-extensions \
     gnome-sushi \
     lolcat \
-    neofetch \
+    #neofetch \
     powerline \
     python-pip \
     python3-argcomplete \
     python3-pip \
-    ranger \
+    #ranger \
     source-highlighting \
+    rlwrap \
     terminator \
     vim-airline \
     wxhexeditor \
     xclip \
-    zaproxy -y > /dev/null
+    zaproxy \
+    -y > /dev/null
     #zenmap -y -qq  # Isn't currently in the repo
 
 # Install Zenmap
@@ -121,6 +128,7 @@ echo -e "\n\n"
 # GitHub Repo clones
 # BASH arrays -- https://www.linuxjournal.com/content/bash-arrays
 # BASH For loops -- https://linuxhint.com/bash_loop_list_strings/
+# TODO add any other repos here
 echo -e "${cyan}*****  GitHub installations  *****${nc}"
 declare -a repos=( \
     SecureAuthCorp/impacket \
@@ -153,9 +161,9 @@ cd $curdir  # Set at ln 74
 #ShellPop
 echo -e "\n${yel}# ${grn}Installing ShellPop.${nc}"
 cd $githome/ShellPop
-python -m pip install wheel
-python -m pip install -r requirements.txt
-sudo -E python setup.py install  # Will fail if CWD is not repo root directory
+python2 -m pip install wheel
+python2 -m pip install -r requirements.txt
+sudo -E python2 setup.py install  # Will fail if CWD is not repo root directory
 cd $curdir
 echo -e "\n\n"
 
@@ -213,10 +221,12 @@ echo -e "${cyan}*****  Copying dotfiles and Configuration  *****${nc}"
 rsync -ax $githome/linux_customizations/ $HOME --exclude=.git
 sudo -E cp $HOME/.vimrc /root  # To ensure VIM looks/works the same when sudo vim is used
 chmod +x $HOME/Desktop/mount-shared-folders $HOME/Desktop/restart-vm-tools
+
+# TODO sets the wallpaper
 gsettings set org.gnome.desktop.background picture-uri file://$HOME/kali_wallpaper.png  # Set wallpaper
 
 # Set Gnome Favorites
-gsettings set org.gnome.shell favorite-apps "['org.gnome.Nautilus.desktop', 'firefox-esr.desktop', 'terminator.desktop', 'org.gnome.gedit.desktop', 'kali-msfconsole.desktop', 'kali-burpsuite.desktop', 'cherrytree.desktop']"
+gsettings set org.gnome.shell favorite-apps "['org.gnome.Nautilus.desktop', 'firefox-esr.desktop', 'org.gnome.gedit.desktop', 'terminator.desktop', 'cherrytree.desktop', 'kali-burpsuite.desktop']"
 
 # Custom key bindings -- https://techwiser.com/custom-keyboard-shortcuts-ubuntu/
 gsettings set org.gnome.settings-daemon.plugins.media-keys custom-keybindings "['/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/','/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/']"
@@ -224,6 +234,7 @@ gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/or
 gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/ binding "'<Primary><Shift>Escape'"
 gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/ command "'gnome-system-monitor'"
 
+# Terminator shortcut win T
 gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/ name "'Terminator'"
 gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/ binding "'<Super>t'"
 gsettings set org.gnome.settings-daemon.plugins.media-keys.custom-keybinding:/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/ command "'terminator'"
@@ -237,8 +248,9 @@ wget https://raw.githubusercontent.com/dracula/gedit/master/dracula.xml -O $HOME
 gsettings set org.gnome.gedit.preferences.editor scheme "'dracula'"
 
 # User theme
+# TODO Pick a theme https://www.gnome-look.org/browse/cat/135/ord/rating/
 gsettings set org.gnome.shell.extensions.user-theme name "'Kali-Dark'"
-gsettings set org.gnome.desktop.interface gtk-theme "'Mc-OS-Transparent-1.3'"
+#gsettings set org.gnome.desktop.interface gtk-theme "'Mc-OS-Transparent-1.3'"
 
 # Default terminal
 gsettings set org.gnome.desktop.default-applications.terminal exec "'terminator'"
