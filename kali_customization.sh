@@ -251,6 +251,7 @@ gsettings set org.gnome.gedit.preferences.editor scheme "'dracula'"
 # TODO Pick a theme https://www.gnome-look.org/browse/cat/135/ord/rating/
 gsettings set org.gnome.shell.extensions.user-theme name "'Kali-Dark'"
 #gsettings set org.gnome.desktop.interface gtk-theme "'Mc-OS-Transparent-1.3'"
+# Orangini  or hacking_Parrot 
 
 # Default terminal
 gsettings set org.gnome.desktop.default-applications.terminal exec "'terminator'"
