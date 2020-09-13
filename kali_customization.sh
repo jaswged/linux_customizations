@@ -49,7 +49,7 @@ fi
 declare githome=$HOME/git
 
 # Is this really needed? TODO
-git clone https://github.com/takieyda/linux_customizations $githome/linux_customizations
+git clone https://github.com/jaswged/linux_customizations.git $githome/linux_customizations
 
 echo -e "${cyan}User:\t ${yel}`whoami`"
 echo -e "${cyan}HOME:\t ${yel}$HOME"
@@ -222,7 +222,7 @@ rsync -ax $githome/linux_customizations/ $HOME --exclude=.git
 sudo -E cp $HOME/.vimrc /root  # To ensure VIM looks/works the same when sudo vim is used
 chmod +x $HOME/Desktop/mount-shared-folders $HOME/Desktop/restart-vm-tools
 
-# TODO sets the wallpaper
+# TODO sets the wallpaper. Change the path 
 gsettings set org.gnome.desktop.background picture-uri file://$HOME/kali_wallpaper.png  # Set wallpaper
 
 # Set Gnome Favorites
