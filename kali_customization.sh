@@ -48,7 +48,6 @@ fi
 
 declare githome=$HOME/git
 
-# Is this really needed? TODO
 git clone https://github.com/jaswged/linux_customizations.git $githome/linux_customizations
 
 echo -e "${cyan}User:\t ${yel}`whoami`"
