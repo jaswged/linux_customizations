@@ -222,7 +222,7 @@ sudo -E cp $HOME/.vimrc /root  # To ensure VIM looks/works the same when sudo vi
 chmod +x $HOME/Desktop/mount-shared-folders $HOME/Desktop/restart-vm-tools
 
 # TODO sets the wallpaper. Change the path 
-gsettings set org.gnome.desktop.background picture-uri file://$HOME/kali_wallpaper.png  # Set wallpaper
+gsettings set org.gnome.desktop.background picture-uri file://$HOME/reference-background.png  # Set wallpaper
 
 # Set Gnome Favorites
 gsettings set org.gnome.shell favorite-apps "['org.gnome.Nautilus.desktop', 'firefox-esr.desktop', 'org.gnome.gedit.desktop', 'terminator.desktop', 'cherrytree.desktop', 'kali-burpsuite.desktop']"
@@ -278,13 +278,13 @@ ext='    },
         "https://addons.mozilla.org/firefox/downloads/file/33echo43599/cookie_quick_manager-0.5rc2-an+fx.xpi",
         "https://addons.mozilla.org/firefox/downloads/file/3616824/foxyproxy_standard-7.5.1-an+fx.xpi",
         "https://addons.mozilla.org/firefox/downloads/file/3398269/max_hackbar-4.7-fx.xpi",
-        "https://addons.mozilla.org/firefox/downloads/file/898030/gnome_shell_integration-10.1-an+fx-linux.xpi",
         "https://addons.mozilla.org/firefox/downloads/file/3384326/http_header_live-0.6.5.2-fx.xpi",
         "https://addons.mozilla.org/firefox/downloads/file/3618861/wappalyzer-6.2.3-fx.xpi"
       ]
     }
   }
 }'
+#        "https://addons.mozilla.org/firefox/downloads/file/898030/gnome_shell_integration-10.1-an+fx-linux.xpi",
 output=`echo -e "$src\n$ext"`
 echo -e "${yel}# ${grn}Original file backed up:${yel} $file.bak${nc}"
 if [ ! -f $file.bak ]; then
