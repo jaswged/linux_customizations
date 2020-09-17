@@ -17,7 +17,7 @@ if [ $XDG_CURRENT_DESKTOP != "GNOME" ]; then
     while : ; do
         read -n 1 -p "Do you want to install Gnome now? [y/n] " ans
         case $ans in
-            [Yy]* ) sudo apt update; sudo apt install gnome -y; break;;
+            [Yy]* ) echo -e "\n"; sudo apt update; sudo apt install gnome -y; break;;
             [Nn]* ) echo -e "\n\n${yel}# ${cyan}Exiting script...${nc}"; exit;;
             * ) echo -e "\n${yel}# ${cyan}Please choose ${yel}Yes ${cyan}or ${yel}No${cyan}.${nc}\n"
         esac
@@ -77,13 +77,12 @@ echo -e "\n\n"
 # Apt installations
 echo -e "${cyan}*****  Apt installations  *****${nc}"
 echo -e "${yel}# ${grn}Performing Apt Update.${nc}"
-sudo apt update > /dev/null
+sudo apt update
 echo -e "${yel}# ${grn}Performing Apt Install.${nc}"
 sudo apt install \
-    #alien \
+    alien \
     bloodhound \
     cowsay \
-    #conf-editor \
     gnome-shell-extension-arc-menu \
     gnome-shell-extension-dash-to-panel \
     gnome-shell-extension-desktop-icons \
@@ -92,21 +91,22 @@ sudo apt install \
     gnome-shell-extensions \
     gnome-sushi \
     lolcat \
-    #neofetch \
     powerline \
     python-pip \
     python3-argcomplete \
     python3-pip \
-    #ranger \
-    source-highlighting \
+    source-highlight \
     rlwrap \
     terminator \
     vim-airline \
+    vim-gtk3 \
     wxhexeditor \
     xclip \
-    zaproxy \
-    -y > /dev/null
-    #zenmap -y -qq  # Isn't currently in the repo
+    zaproxy -y 
+    #> /dev/null
+    #ranger \
+    #neofetch \
+    #conf-editor \
 
 # Install Zenmap
 # ZenMap (as Root) shortcut doesn't seem to work, considering replacing it with sudo -E zenmap
@@ -251,6 +251,7 @@ gsettings set org.gnome.gedit.preferences.editor scheme "'dracula'"
 gsettings set org.gnome.shell.extensions.user-theme name "'Kali-Dark'"
 #gsettings set org.gnome.desktop.interface gtk-theme "'Mc-OS-Transparent-1.3'"
 # Orangini  or hacking_Parrot 
+gsettings set org.gnome.desktop.interface gtk-theme "'hacking_Parrot'"
 
 # Default terminal
 gsettings set org.gnome.desktop.default-applications.terminal exec "'terminator'"
